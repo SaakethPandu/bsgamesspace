@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body{
+           background-image: url(./astronaut-in-the-ocean.1920x1080.gif);
+           background-repeat: no-repeat;
+           background-size: cover;
+        }
+header h1{
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    text-shadow: 3px 3px 5px rgb(0, 225, 255);
+    text-decoration: underline;
+    text-decoration-color:rgb(255, 0, 0) ;
+    text-align: center;
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+}
+nav img{
+    width: 200px;
+    height: 90px;
+    image-rendering: auto;
+    text-shadow: 5px 5px 9px rgb(255, 255, 255);
+}
+ul{
+    display:flex;
+    width: 600px;
+    justify-content: space-evenly;
+    margin-left: 500px;
+    margin-top: -10px;
+}
+ul li{
+    list-style-type: none;
+}
+ul li a{
+    text-decoration: none;
+    background-color:none;
+    border-radius: 15px;
+    padding: 20px;
+    color: aliceblue;
+}
+.product-container{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    border: 2px solid black;
+    background-color: rgba(0, 0, 0, 0.556);
+    flex-wrap: wrap;
+    border-radius: 50px;
+}
+.product-item{
+    height :210px;
+    width:1300px;
+    background-color: rgba(0, 0, 0, 0.655);
+    box-shadow: 5px 5px 8px rgb(255, 255, 255);
+    row-gap:35px ;
+    margin: 50px 50px;
+    float: right;
+    border-radius: 15px;
+    margin-left: 175px;
+}
+.product-item img{
+    width: 150px;
+    height:150px;
+    margin:25px 25px;
+    box-shadow: 5px 5px 8px rgb(255, 255, 255);
+    border-radius: 15%;
+}
+.rate{
+    color: red;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 110px;
+}
+span.rate_dash{
+    margin-bottom: -100px;
+    margin-left: 10px;
+    background-color: aqua;
+    padding-right: 50px;
+    padding-left: 50px;
+    border-radius: 15px;
+}
+.title{
+  margin-left: 550px;
+  margin-top: -200px;
+  font-size: 50px;
+  color: aliceblue;
+}
+.discripton{
+    margin-left: 665px;
+    margin-top: 10px;
+    color: darkgreen;
+    font-size: 25px;
+}
+
+.one{
+  text-align: center;
+  margin-right: 1200px;
+}
+
+/* New styles for sign-in status in top-left corner */
+#status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+    <!-- Status Display -->
+    <div id="status">Signed out</div>
+
+     <header>
+        <h1>🛒BS GAME SPACE🛒</h1>
+    </header> 
+    <nav>
+        <ul>
+            <li><a href="./flex_example(1).html">HOME</a></li>
+            <li><a href="">GAMES</a></li>
+            <li><a href="./contact.html">CONTACT</a></li>
+            <li><a href="auth.html" id="sign-in-link">SIGN IN</a></li>
+        </ul>
+    </nav>
+    <div class="product-container">
+        <div class="product-item">
+            <img src="./10199746.png" alt="">
+            <div class="title">TIC TAC TOE</div>
+            <div class="discripton">FREE</div>
+            <div class="rate"><a href="https://tubular-dusk-54820c.netlify.app/"><span  class="rate_dash">PLAY</span></a></div>
+        </div>
+    </div>
+
+    <script>
+        // Check if the user is signed in
+        const isUserSignedIn = localStorage.getItem('isUserSignedIn');
+        const signInLink = document.getElementById('sign-in-link');
+        const statusDisplay = document.getElementById('status');
+
+        // If user is signed in, hide the sign-in link and update status
+        if (isUserSignedIn === 'true') {
+            signInLink.style.display = 'none';
+            statusDisplay.textContent = 'Signed in';
+        } else {
+            statusDisplay.textContent = 'Signed out';
+        }
+
+        // Simulate sign-in action
+        function signIn() {
+            // Simulate sign-in by setting a flag in localStorage
+            localStorage.setItem('isUserSignedIn', 'true');
+
+            // Redirect to the introduction page after successful sign-in
+            window.location.href = 'introduction.html'; // Change to the page you want to redirect to
+        }
+
+        // Example: Call signIn() when the sign-in button on auth.html is clicked
+        // <button onclick="signIn()">Sign In</button> can trigger this in the auth.html
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Bujji</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #282c34;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #loading-bar {
+            width: 0;
+            height: 30px;
+            background-color: #61dafb;
+        }
+        #loading-container {
+            width: 80%;
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Loading Bujji...</h1>
+        <div id="loading-container">
+            <div id="loading-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        let loadingBar = document.getElementById('loading-bar');
+        let width = 0;
+
+        function move() {
+            if (width >= 100) {
+                clearInterval(interval);
+                window.location.href = 'difficulty_selection.html';
+            } else {
+                width++;
+                loadingBar.style.width = width + '%';
+            }
+        }
+
+        let interval = setInterval(move, 30);
+    </script>
+</body>
+</html>

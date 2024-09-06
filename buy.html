@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BS BUYING PAGE</title>
+    <style>
+        body {
+            font-family:cursive;
+            background-image: url(./astronaut-in-the-ocean.1920x1080.gif);
+            background-repeat: no-repeat ;
+            background-size: cover;
+            color: white;
+        }
+
+        header {
+            text-align: center;
+            font-size: 50px;
+            margin-top: 20px;
+        }
+
+        .h1 {
+            font-size: 40px;
+        }
+
+        .game_name {
+            font-size: 45px;
+        }
+
+        .buy_container {
+            text-align: center;
+            border: solid 3px black;
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            background-color: white;
+            color: black;
+        }
+
+        .total_line {
+            margin-inline: 13px;
+        }
+
+        .buy_button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .buy_button:hover {
+            background-color: #218838;
+        }
+
+        /* Popup Modal Styles */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border-radius: 8px;
+            opacity: 0;
+            transition: all 0.3s ease-out;
+            color: black;
+        }
+
+        #popup.show {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #popup h2 {
+            margin-bottom: 20px;
+        }
+
+        #popup button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #popup button:hover {
+            background-color: #218838;
+        }
+        .glow {
+  font-size: 50px;
+  color: #ffffff;
+  text-align: center;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+        @-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #b0e600, 0 0 40px #19e4c6, 0 0 50px #35eccb, 0 0 60px #0afbc7, 0 0 70px #e60073;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ef0e0e, 0 0 40px #ff3045, 0 0 50px #f4074e, 0 0 60px #f40e3c, 0 0 70px #fa054f, 0 0 80px #ff4da6;
+  }
+}
+.cancel{
+    padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            font-family: cursive;
+            text-decoration: none;
+}
+    </style>
+</head>
+<body>
+    
+    <header class="glow" id="head"  >WELCOME</header>
+    <header class="glow" id="h1">Thanks for Buying</header>
+    <header class="glow" id="game_name">TIC TAC TOE</header>
+
+    <div class="buy_container"> 
+        <p class="total_money">Total money: 15₹</p>
+        <p class="discount">Discount: -15₹</p>
+        <p class="total_line">____________</p>
+        <p class="total">0₹</p>
+        <p class="total_line">____________</p>
+
+        <!-- Buy Now Button -->
+        <button class="buy_button" onclick="buyNow()">Buy Now</button>
+       <a class="cancel" href="./introduction.html">cancel</a>
+    </div>
+
+    <!-- Popup Message -->
+    <div id="popup">
+        <h2>Successfully Bought!</h2>
+        <button onclick="redirectToGame()">GO TO GAME</button>
+        
+    </div>
+    <div id="popup">
+        <h2>Are you shure to cancel the payment</h2>
+        <button onclick="redirectToHome()">GO TO HOME</button>
+        
+    </div>
+
+    <script>
+       function cancel(){
+        const popup1= document.getElementById("popup");
+            popup1.classList.add("show");
+        }
+       
+        // Show popup with animation when user clicks "Buy Now"
+        function buyNow() {
+            const popup = document.getElementById("popup");
+            popup.classList.add("show");
+        }
+
+        // Redirect to index.html after clicking the popup button
+        function redirectToGame() {
+            window.location.href = 'https://tubular-dusk-54820c.netlify.app/'; // Redirect to index.html
+        }
+        function redirectToHome(){
+            window.location.href='introduction.html'
+        }
+        
+    </script>
+
+</body>
+</html>

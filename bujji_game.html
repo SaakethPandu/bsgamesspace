@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe with Bujji</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #282c34;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(4, 100px);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+            background-color: #61dafb;
+            font-size: 36px;
+            cursor: pointer;
+        }
+        .cell:hover {
+            background-color: #52c0e3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        #play-again {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #61dafb;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #play-again:hover {
+            background-color: #52c0e3;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <!-- 16 cells for 4x4 grid -->
+        <div class="cell" onclick="makeMove(this, 0)"></div>
+        <div class="cell" onclick="makeMove(this, 1)"></div>
+        <div class="cell" onclick="makeMove(this, 2)"></div>
+        <div class="cell" onclick="makeMove(this, 3)"></div>
+        <div class="cell" onclick="makeMove(this, 4)"></div>
+        <div class="cell" onclick="makeMove(this, 5)"></div>
+        <div class="cell" onclick="makeMove(this, 6)"></div>
+        <div class="cell" onclick="makeMove(this, 7)"></div>
+        <div class="cell" onclick="makeMove(this, 8)"></div>
+        <div class="cell" onclick="makeMove(this, 9)"></div>
+        <div class="cell" onclick="makeMove(this, 10)"></div>
+        <div class="cell" onclick="makeMove(this, 11)"></div>
+        <div class="cell" onclick="makeMove(this, 12)"></div>
+        <div class="cell" onclick="makeMove(this, 13)"></div>
+        <div class="cell" onclick="makeMove(this, 14)"></div>
+        <div class="cell" onclick="makeMove(this, 15)"></div>
+    </div>
+    <div class="result" id="result"></div>
+    <button id="play-again" onclick="resetGame()">Play Again</button>
+
+    <script>
+        let board = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X'; // Player 'X' (You)
+        const aiPlayer = 'O'; // AI 'Bujji'
+        let isGameOver = false;
+        let difficulty;
+
+        // Parse difficulty from URL
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            difficulty = urlParams.get('difficulty') || 'normal';
+        }
+
+        function makeMove(cell, index) {
+            if (!isGameOver && board[index] === '') {
+                board[index] = currentPlayer;
+                cell.innerText = currentPlayer;
+                checkWinOrDraw();
+                if (!isGameOver) {
+                    currentPlayer = aiPlayer;
+                    setTimeout(aiMove, 500); // AI makes a move after a short delay
+                }
+            }
+        }
+
+        function aiMove() {
+            let move;
+            if (difficulty === 'easy') {
+                move = findRandomMove();
+            } else if (difficulty === 'normal') {
+                move = findBestMove(false); // Normal AI with some randomness
+            } else {
+                move = findBestMove(true); // Hard AI with perfect strategy
+            }
+            board[move] = aiPlayer;
+            document.querySelectorAll('.cell')[move].innerText = aiPlayer;
+            checkWinOrDraw();
+            if (!isGameOver) {
+                currentPlayer = 'X';
+            }
+        }
+
+        function findRandomMove() {
+            let availableMoves = [];
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    availableMoves.push(i);
+                }
+            }
+            return availableMoves[Math.floor(Math.random() * availableMoves.length)];
+        }
+
+        function findBestMove(isPerfect) {
+            // If perfect play is not required, add some randomness
+            if (!isPerfect && Math.random() > 0.7) {
+                return findRandomMove();
+            }
+
+            // Otherwise, find the best move
+            let bestMove = null;
+            let bestValue = -Infinity;
+
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = aiPlayer;
+                    let moveValue = minimax(board, 0, false, isPerfect);
+                    board[i] = '';
+
+                    if (moveValue > bestValue) {
+                        bestValue = moveValue;
+                        bestMove = i;
+                    }
+                }
+            }
+            return bestMove;
+        }
+
+        function minimax(newBoard, depth, isMaximizing, isPerfect) {
+            let scores = {
+                'O': 10,
+                'X': -10,
+                'tie': 0
+            };
+
+            let result = checkWinner(currentPlayer === 'X' ? aiPlayer : currentPlayer);
+            if (result !== null) {
+                return scores[result];
+            }
+
+            if (isMaximizing) {
+                let bestScore = -Infinity;
+                for (let i = 0; i < newBoard.length; i++) {
+                    if (newBoard[i] === '') {
+                        newBoard[i] = aiPlayer;
+                        let score = minimax(newBoard, depth + 1, false, isPerfect);
+                        newBoard[i] = '';
+                        bestScore = Math.max(score, bestScore);
+                    }
+                }
+                return bestScore;
+            } else {
+                let bestScore = Infinity;
+                for (let i = 0; i < newBoard.length; i++) {
+                    if (newBoard[i] === '') {
+                        newBoard[i] = currentPlayer;
+                        let score = minimax(newBoard, depth + 1, true, isPerfect);
+                        newBoard[i] = '';
+                        bestScore = Math.min(score, bestScore);
+                    }
+                }
+                return bestScore;
+            }
+        }
+
+        function checkWinOrDraw() {
+            if (checkWinner(currentPlayer)) {
+                declareWinner(currentPlayer);
+            } else if (!board.includes('')) {
+                declareDraw();
+            }
+        }
+
+        function checkWinner(player) {
+            const winPatterns = [
+                [0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15], // rows
+                [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], // columns
+                [0, 5, 10, 15], [3, 6, 9, 12] // diagonals
+            ];
+
+            for (let pattern of winPatterns) {
+                let [a, b, c, d] = pattern;
+                if (board[a] === player && board[b] === player && board[c] === player && board[d] === player) {
+                    return player;
+                }
+            }
+
+            return board.includes('') ? null : 'tie';
+        }
+
+        function declareWinner(winner) {
+            isGameOver = true;
+            document.getElementById('result').innerText = `${winner} wins!`;
+            document.getElementById('play-again').style.display = 'block';
+        }
+
+        function declareDraw() {
+            isGameOver = true;
+            document.getElementById('result').innerText = `It's a draw!`;
+            document.getElementById('play-again').style.display = 'block';
+        }
+
+        function resetGame() {
+            board = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            isGameOver = false;
+            document.querySelectorAll('.cell').forEach(cell => cell.innerText = '');
+            document.getElementById('result').innerText = '';
+            document.getElementById('play-again').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
