@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X O BORD </title>
+    <style>body {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        background-color: #ff0000;
+        margin: 0;
+    }
+    
+    #game-board {
+        display: none; /* Hidden initially until grid size is selected */
+        margin: 20px auto;
+        gap: 5px;
+        display: grid;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+    }
+    
+    .cell {
+        width: 80px;
+        height: 80px;
+        background-color: #333; /* Dark background for good contrast */
+        color: white; /* White color for X and O */
+        font-size: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    
+    #message {
+        font-size: 24px;
+        margin-top: 20px;
+        color: #333;
+    }
+    
+    #reset-btn {
+        margin: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    
+    .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+    
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+    
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+    
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+    
+    .open-btn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+    }
+    
+    /* Customization section layout */
+    .customization-section {
+        padding: 0 32px;
+        color: white;
+    }
+    
+    .custom-option {
+        margin-bottom: 20px;
+    }
+    
+    .custom-option label {
+        font-size: 18px;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .custom-option select {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+    }
+    
+    .difficulty-buttons button {
+        margin: 5px;
+        padding: 8px 15px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .difficulty-buttons button:hover {
+        background-color: #575757;
+        color: white;
+    }
+    
+    /* Version label styling */
+    #version {
+        font-size: 18px;
+        color: #ccc;
+    }
+    
+    </style>
+<body>
+    <h1>Tic Tac Toe</h1>
+    
+    <!-- Button to open the side navigation -->
+    <button class="open-btn" onclick="openNav()">Customization</button>
+
+    <!-- Side navigation for customization -->
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="customization-section">
+            <h2>Customization</h2>
+            <div class="custom-option">
+                <label for="version">Version:</label>
+                <p id="version">1.0.0</p>
+            </div>
+            <div class="custom-option">
+                <label for="mode-selector">Select Mode:</label>
+                <select id="mode-selector" onchange="setMode()">
+                    <option value="single">Single Player</option>
+                    <option value="two">Two Player</option>
+                </select>
+            </div>
+            <div class="custom-option">
+                <label for="grid-size">Select Grid Size:</label>
+                <select id="grid-size" onchange="setGridSize()">
+                    <option value="0">--Select--</option>
+                    <option value="3">3x3</option>
+                    <option value="4">4x4</option>
+                    <option value="5">5x5</option>
+                </select>
+            </div>
+            <div class="custom-option">
+                <label>Select Difficulty:</label>
+                <div class="difficulty-buttons">
+                    <button onclick="setDifficulty('easy')">Easy</button>
+                    <button onclick="setDifficulty('medium')">Medium</button>
+                    <button onclick="setDifficulty('hard')">Hard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="message">Please select the grid size in the Customization tab to start the game.</div>
+    <div id="game-board"></div>
+    <button id="reset-btn" onclick="resetGame()" style="display: none;">Reset Game</button>
+
+    <script >let board = [];
+        let currentPlayer = 'X';
+        let gameActive = true;
+        let difficulty = 'easy';
+        let gridSize = 0;  // Initially set to 0 until user selects grid size
+        let mode = 'single'; // Default mode is single player (against AI)
+        
+        function setGridSize() {
+            const sizeSelector = document.getElementById('grid-size');
+            gridSize = parseInt(sizeSelector.value);
+        
+            if (gridSize === 0) {
+                // Show message if grid size is not selected
+                document.getElementById('message').textContent = 'Please select the grid size in the Customization tab to start the game.';
+                document.getElementById('game-board').style.display = 'none';
+                document.getElementById('reset-btn').style.display = 'none';
+            } else {
+                // Hide the message and show the game board once grid size is selected
+                document.getElementById('message').textContent = '';
+                document.getElementById('game-board').style.display = 'grid';
+                document.getElementById('reset-btn').style.display = 'inline-block';
+                resetGame();
+            }
+        }
+        
+        function setDifficulty(level) {
+            difficulty = level;
+            if (gridSize > 0) resetGame(); // Reset only if grid is selected
+        }
+        
+        function setMode() {
+            const modeSelector = document.getElementById('mode-selector');
+            mode = modeSelector.value;
+            if (gridSize > 0) resetGame(); // Reset only if grid is selected
+        }
+        
+        function resetGame() {
+            board = Array(gridSize * gridSize).fill('');
+            currentPlayer = 'X';
+            gameActive = true;
+            document.getElementById('message').textContent = '';
+            renderBoard();
+        }
+        
+        function renderBoard() {
+            const gameBoard = document.getElementById('game-board');
+            gameBoard.innerHTML = '';
+            gameBoard.style.gridTemplateColumns = `repeat(${gridSize}, 80px)`;
+        
+            board.forEach((cell, index) => {
+                const cellElement = document.createElement('div');
+                cellElement.classList.add('cell');
+                cellElement.textContent = cell;
+                cellElement.addEventListener('click', () => handlePlayerMove(index));
+                gameBoard.appendChild(cellElement);
+            });
+        }
+        
+        function handlePlayerMove(index) {
+            if (board[index] !== '' || !gameActive) return;
+        
+            board[index] = currentPlayer;
+            renderBoard();
+            checkResult();
+        
+            if (gameActive) {
+                if (mode === 'single' && currentPlayer === 'X') {
+                    currentPlayer = 'O';
+                    setTimeout(handleAIMove, 500);
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                }
+            }
+        }
+        
+        function handleAIMove() {
+            let move;
+            if (difficulty === 'easy') {
+                move = randomMove();
+            } else if (difficulty === 'medium') {
+                move = mediumAIMove();
+            } else {
+                move = minimax(board, 'O').index;
+            }
+        
+            board[move] = 'O';
+            renderBoard();
+            checkResult();
+        
+            if (gameActive) {
+                currentPlayer = 'X';
+            }
+        }
+        
+        function randomMove() {
+            let availableMoves = board.map((cell, index) => (cell === '' ? index : null)).filter(i => i !== null);
+            return availableMoves[Math.floor(Math.random() * availableMoves.length)];
+        }
+        
+        function mediumAIMove() {
+            let winMove = getWinningMove('O');
+            if (winMove !== null) return winMove;
+        
+            let blockMove = getWinningMove('X');
+            if (blockMove !== null) return blockMove;
+        
+            return randomMove();
+        }
+        
+        function getWinningMove(player) {
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = player;
+                    if (checkWin(board, player)) {
+                        board[i] = '';
+                        return i;
+                    }
+                    board[i] = '';
+                }
+            }
+            return null;
+        }
+        
+        function checkResult() {
+            if (checkWin(board, 'X')) {
+                document.getElementById('message').textContent = 'Player X Wins!';
+                gameActive = false;
+            } else if (checkWin(board, 'O')) {
+                document.getElementById('message').textContent = 'Player O Wins!';
+                gameActive = false;
+            } else if (board.every(cell => cell !== '')) {
+                document.getElementById('message').textContent = 'It\'s a Tie!';
+                gameActive = false;
+            }
+        }
+        
+        function checkWin(board, player) {
+            return winConditions().some(condition =>
+                condition.every(index => board[index] === player)
+            );
+        }
+        
+        function winConditions() {
+            let conditions = [];
+            
+            // Horizontal, Vertical, and Diagonal win conditions based on gridSize
+            for (let i = 0; i < gridSize; i++) {
+                conditions.push([...Array(gridSize)].map((_, j) => i * gridSize + j)); // Rows
+                conditions.push([...Array(gridSize)].map((_, j) => j * gridSize + i)); // Columns
+            }
+            
+            // Diagonals
+            conditions.push([...Array(gridSize)].map((_, i) => i * gridSize + i)); // Top-left to bottom-right
+            conditions.push([...Array(gridSize)].map((_, i) => i * gridSize + (gridSize - i - 1))); // Top-right to bottom-left
+        
+            return conditions;
+        }
+        
+        // Open the side navigation
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+        
+        // Close the side navigation
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+        </script>
+</body>
+</html>
