@@ -3,98 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In to bs game Space</title>
+    <title>Game Space</title>
     <style>
         body {
             background-image: url(./pexels-thatguycraig000-1563356.jpg);
             background-repeat: no-repeat;
             background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
         }
 
-        .form-container {
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            padding: 20px;
-            width: 400px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .form-container h2 {
-            color: aliceblue;
+        header h1 {
+            font-size: 50px;
+            color: rgb(255, 255, 255);
+            text-shadow: 3px 3px 5px rgb(98, 0, 255);
+            text-decoration: underline;
+            text-decoration-color: rgb(255, 0, 0);
             text-align: center;
+            margin: 0;
+            padding: 20px;
         }
 
-        .form-container input {
-            width: 100%;
+        nav {
+            display: flex;
+color: aliceblue;
             padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
+            background-color:none;
+           flex-wrap: wrap;
+           position: relative;
         }
 
-        .form-container button {
-            width: 100%;
+        ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            margin-left: 250px;
+        }
+
+        ul li {
+            margin: 0 15px;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border-radius: 15px;
+            background-color: rgb(0, 64, 255);
+            transition: background-color 0.3s ease;
+        }
+
+        ul li a:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: flex-end;
             padding: 10px;
-            border: none;
-            border-radius: 5px;
+            flex-wrap: wrap;
+            
+        }
+
+        .nav-bar button {
+            display: none;
             background-color: #00e1ff;
-            color: black;
+            border: none;
+            border-radius: 15px;
+            padding: 10px 20px;
+            color: rgb(255, 255, 255);
             font-size: 16px;
             cursor: pointer;
+            margin-left: 10px;
+            display: flex;
         }
 
-        .form-container button:hover {
+        .nav-bar button:hover {
             background-color: #008fb3;
         }
 
-        .message {
-            color: red;
-            text-align: center;
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
         }
-        .glow {
-  font-size: 50px;
-  color: #ffffff;
-  text-align: center;
-  animation: glow 1s ease-in-out infinite alternate;
-}
-@-webkit-keyframes glow {
-  from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-  }
-  to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-  }
-}
-.btn{
-    margin-left: 95px;
-    background-color: aqua;
-    padding:  10px 20px;
-    text-decoration: none;
-    font-family: cursive;
-    border-radius: 15px;
-    border: 5px solid black;
-}
+
+        .product-item {
+            width: 300px;
+            height: 375px;
+            background-color: rgba(0, 0, 0, 0.655);
+            box-shadow: 5px 5px 8px rgb(255, 234, 0);
+            margin: 20px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .product-item img {
+            width: 150px;
+            height: 150px;
+            margin: 25px;
+            box-shadow: 5px 5px 8px rgb(221, 255, 0);
+            border-radius: 15%;
+        }
+
+        .title {
+            font-size: 30px;
+            color: aliceblue;
+            margin-top: 10px;
+        }
+
+        .discripton {
+            color: darkgreen;
+            font-size: 25px;
+        }
+
+        .rate {
+            color: red;
+            font-size: 30px;
+            margin: 20px 0;
+        }
+
+        .rate a {
+            background-color: aqua;
+            padding: 10px 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        #signInMessage {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 40px;
+            z-index: 1000;
+        }
+
+        #signInMessage button {
+            margin-top: 20px;
+            padding: 10px 30px;
+            font-size: 20px;
+            background-color: #00e1ff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        span{
+            text-decoration: line-through red;
+        }
+        recent{
+            background-color: aqua;
+        }
+       
+        
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>NOTE</h2>
-        <h1 class="glow">SITE IS UNDER MAINTANENCE WILL BE BACK ONLINE IN 24hrs</h1>
-        
+    <header>
+        <h1>🛒BS GAME SPACE🛒</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./introduction.html">HOME</a></li>
+            <li><a href="#">GAMES</a></li>
+            <li><a href="./contact.html">CONTACT</a></li>
+            <li><a id="1" href="auth.html" id="signInLink">SIGN IN</a></li>
+            <li><a id="1" href="signup.html" id="signInLink">SIGN UP</a></li>
+            <li><a class="recent" href="recent.html " >recent updates</a></li>
+        </ul>
+            
+    </nav>
+
+   
+
+    <div class="product-container">
+        <!-- Example Game Item -->
+        <div class="product-item">
+            <img src="./10199746.png" alt="Tic Tac Toe">
+            <div class="title">TIC TAC TOE</div>
+            <div class="discripton"><span>15₹</span>FREE</div>
+            <div class="rate">
+                <a href="buy.html" id="playButton">PLAY</a>
+            </div>
+        </div>
+        <!-- Add more game items here -->
+        <div class="product-item">
+            <img src="./Screenshot 2024-09-05 122854.png" alt="Another Game">
+            <div class="title">ROCKE BEY</div>
+            <div class="discripton">COMING SOON</div>
+            <div class="rate">
+                <a >COMING SOON</a>
+            </div>
+            
+        </div>
+        <div class="product-item">
+            <img src="./Screenshot 2024-09-05 122854.png" alt="Another Game">
+            <div class="title">COMING SOON</div>
+            <div class="discripton">COMING SOON</div>
+            <div class="rate">
+                <a >COMING SOON</a>
+            </div>
+        </div>
+            
+        <!-- Add more games similarly -->
+        <div class="product-item">
+            <img src="./Screenshot 2024-09-05 122854.png" alt="Another Game">
+            <div class="title">COMING SOON</div>
+            <div class="discripton">COMING SOON</div>
+            <div class="rate">
+                <a >COMING SOON</a>
+            </div>
+        </div>
+
+  <!-- Add more games similarly -->
+  <div class="product-item">
+    <img src="./Screenshot 2024-09-05 122854.png" alt="Another Game">
+    <div class="title">COMING SOON</div>
+    <div class="discripton">COMING SOON</div>
+    <div class="rate">
+        <a >COMING SOON</a>
     </div>
+</div>
+
+  <!-- Add more games similarly -->
+  <div class="product-item">
+    <img src="./Screenshot 2024-09-05 122854.png" alt="Another Game">
+    <div class="title">COMING SOON</div>
+    <div class="discripton">COMING SOON</div>
+    <div class="rate">
+        <a >COMING SOON</a>
+    </div>
+</div>
+
+
+    <!-- Sign In First Message -->
+    <div id="signInMessage">
+        Sign In First!
+        <br>
+        <button onclick="closeMessage()">Close</button>
+    </div>
+  
 
     <script>
-        function signIn() {
-         
-        }
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const signOutButton = document.getElementById('signOutButton');
+            const playButton = document.getElementById('playButton');
+            const signInMessage = document.getElementById('signInMessage');
+            const signInLink = document.getElementById('signInLink');
+
+            // Function to handle sign-out
+            function handleSignOut() {
+                localStorage.removeItem('isUserSignedIn');
+                location.reload(); // Reload the page to reflect sign-out
+            }
+
+            // Function to close the sign-in message
+            function closeMessage() {
+                signInMessage.style.display = 'none';
+            }
+
+            // Check if the user is signed in
+            const isUserSignedIn = localStorage.getItem('isUserSignedIn');
+            
+            // Show or hide the Sign Out button and Sign In link based on sign-in status
+            if (isUserSignedIn === 'true') {
+                signOutButton.style.display = 'block'; // Show Sign Out button
+                signInLink.style.display = 'none'; // Hide Sign In link
+            } else {
+                signOutButton.style.display = 'none'; // Hide Sign Out button
+                signInLink.style.display = 'block'; // Show Sign In link
+            }
+
+            // Add event listener to Sign Out button
+            signOutButton.addEventListener('click', handleSignOut);
+
+            // Add event listener to Play button
+            playButton.addEventListener('click', function(event) {
+                if (isUserSignedIn !== 'true') {
+                    event.preventDefault(); // Prevent default link behavior
+                    signInMessage.style.display = 'block'; // Show sign-in message
+                } else {
+                    window.location.href = 'https://tubular-dusk-54820c.netlify.app/'; // Redirect to game
+                }
+            });
+        });
     </script>
     <audio autoplay>
-        <source src="Egzod, Maestro Chives, Neoni - Royalty [NCS Release].mp3" type="audio/mpeg">   
+        <source src="Lukrembo - Sunset (freetouse.com).mp3" type="audio/mpeg"> 
     </audio>
 </body>
 </html>
