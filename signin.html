@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
+    <title>Sign In to bs game Space</title>
     <style>
         body {
-            background-image: url(./astronaut-in-the-ocean.1920x1080.gif);
+            background-image: url(./pexels-thatguycraig000-1563356.jpg);
             background-repeat: no-repeat;
             background-size: cover;
             display: flex;
@@ -20,7 +20,7 @@
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
             padding: 20px;
-            width: 300px;
+            width: 400px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
@@ -56,37 +56,45 @@
             color: red;
             text-align: center;
         }
+        .glow {
+  font-size: 50px;
+  color: #ffffff;
+  text-align: center;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}
+.btn{
+    margin-left: 95px;
+    background-color: aqua;
+    padding:  10px 20px;
+    text-decoration: none;
+    font-family: cursive;
+    border-radius: 15px;
+    border: 5px solid black;
+}
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h2>Sign In</h2>
-        <div class="message" id="message"></div>
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button onclick="signIn()">Sign In</button>
-        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        <h2>NOTE</h2>
+        <h1 class="glow">this feature will be avilable soon </h1>
+        
     </div>
 
     <script>
         function signIn() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const message = document.getElementById('message');
-
-            if (username && password) {
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const user = users.find(user => user.username === username && user.password === password);
-                if (user) {
-                    localStorage.setItem('isUserSignedIn', 'true');
-                    window.location.href = 'introduction.html'; // Redirect to home page after sign-in
-                } else {
-                    message.textContent = 'Invalid username or password!';
-                }
-            } else {
-                message.textContent = 'Please fill in all fields!';
-            }
+         
         }
     </script>
+    <audio autoplay>
+        <source src="Lukrembo - Sunset (freetouse.com).mp3" type="audio/mpeg">   
+    </audio>
 </body>
 </html>
